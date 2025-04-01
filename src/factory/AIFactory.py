@@ -19,10 +19,16 @@ class AIFactory:
         The format of the questions should be
         {
         "title": "here will be the title of the question you generated",
-        "answer": "here will be a positive integer that you will indicate which is the correct answer, which corresponds to the index of the array; for example 0, corresponds to the first element of the options array",
-        "options": "here will be an array of strings, where all the alternatives that you decide to include based on the test's furniture will be"
+        "answer": "here will be a positive integer that will indicate the correct answer, which corresponds to the index of the array; for example, 0, corresponds to the first element of the options array",
+        "options": "here will be an array of strings, where will be all the alternatives that you decide to include based on the test furniture"
+        "type": "this field can be of three types: 'MC' if it is a multiple choice question, 'TF' if it is true or false or 'ES', if it is an essay question." }
+        If the prompt asks you to generate a test, you must return an array with the number of questions requested, as shown in the example below
+        [{
+        "title": "here will be the title of the question you generated",
+        "answer": "here will be a positive integer that will indicate the correct answer, which corresponds to the index of the array; for example, 0, corresponds to the first element of the options array",
+        "options": "here will be an array of strings, where will be all the alternatives that you decide to include based on the test's furniture"
         "type": "this field can be of three types: 'MC' if it is a multiple choice question, 'TF' if it is true or false or 'ES', if it is an essay question."
-        }
+        }]
     """
     
     def get_ai(self, ai_type: str, model: str = "gemini-1.5-pro-latest") -> AIInterface:
