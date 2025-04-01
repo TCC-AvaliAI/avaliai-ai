@@ -1,14 +1,20 @@
 import os
 import google.generativeai as genai
-from interfaces.AIInterface import AIInterface
+from src.interfaces.AIInterface import AIInterface
+from dotenv import load_dotenv
 
+load_dotenv()
 class GeminiAIAdapter(AIInterface):
-    GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-    genai.configure(api_key=GOOGLE_API_KEY)
-    
-    def __init__(self,  base_prompt: str, model: str = 'gemini-pro') -> None:
-        self._model = genai.GenerativeModel(model)
+    def __init__(self, base_prompt: str, model: str = '"gemini-1.5-pro-latest"') -> None:
         self._persona = base_prompt
+        self._model = None
+
+        api_key = os.getenv("GOOGLE_API_KEY")
+        if not api_key:
+            raise ValueError("GOOGLE_API_KEY não está definido no ambiente.")
+        
+        genai.configure(api_key=api_key)
+        self._model = genai.GenerativeModel(model)
 
     def generate_response(self, prompt: str) -> str:
         try:  

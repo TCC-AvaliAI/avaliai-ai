@@ -1,5 +1,5 @@
-from interfaces.AIInterface import AIInterface
-from adapter import GeminiAIAdapter
+from src.interfaces.AIInterface import AIInterface
+from src.adapter.GeminiAIAdapter import GeminiAIAdapter
 
 class AIFactory:
     def __init__(self) -> None:
@@ -25,7 +25,7 @@ class AIFactory:
         }
     """
     
-    def get_ai(self, ai_type: str, model: str = 'gemini-pro') -> AIInterface:
+    def get_ai(self, ai_type: str, model: str = "gemini-1.5-pro-latest") -> AIInterface:
         if ai_type == 'gemini':
             return GeminiAIAdapter(self._base_prompt, model)
         else:
