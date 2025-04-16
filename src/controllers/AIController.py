@@ -15,3 +15,15 @@ def generate_response():
         return jsonify({"response": response}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@app.route('/api/ai/exam/markdown/', methods=['POST'])
+def generate_exam_file():
+    data = request.get_json()
+    if not data or 'exam' not in data:
+        return jsonify({"error": "O campo 'exam' é obrigatório."}), 400
+    exam = data['exam']
+    try:
+        response = ai_service.generate_exam_file(exam)
+        return jsonify({"response": response}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

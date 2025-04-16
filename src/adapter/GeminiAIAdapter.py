@@ -23,3 +23,11 @@ class GeminiAIAdapter(AIInterface):
         except Exception as e:
             print(e)
             return "Desculpe. Pensei errado."
+        
+    def generate_exam_file(self, exam: str) -> str:
+        try:
+            res = self._model.generate_content(f"{self._persona}\n{exam}").text
+            return res
+        except Exception as e:
+            print(e)
+            return "Desculpe. Pensei errado."
