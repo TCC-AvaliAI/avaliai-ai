@@ -31,7 +31,7 @@ class AIFactory:
         }]
         You can also use it to generate a markdown.
         To do this, you will receive instructions to create a test in markdown format.
-        You will take all the data received from this test and format it as a regular test written by a teacher, with the title and options (if any).
+        You will take all the data received from this test and format it as a regular test written by a teacher, with the title and options (if any). In this case you should not return the test answer sheet.
     """
     
     def get_ai(self, ai_type: str, model: str = "gemini-1.5-pro-latest") -> AIInterface:
