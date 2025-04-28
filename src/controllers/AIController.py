@@ -24,6 +24,6 @@ def generate_response_question():
     question = data['question']
     try:
         response = ai_service.generate_response_question(question)
-        return jsonify({"response": response}), 200
+        return jsonify({"answer": response}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
