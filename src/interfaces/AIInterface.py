@@ -7,5 +7,5 @@ class AIInterface(ABC):
         pass
 
     @abstractmethod
-    def generate_exam_file(self, exam: str) -> str:
+    def generate_response_question(self, question: str) -> str:
         pass
