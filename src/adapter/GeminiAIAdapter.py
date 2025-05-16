@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 class GeminiAIAdapter(AIInterface):
-    def __init__(self, base_prompt: str, model: str = '"gemini-1.5-pro-latest"') -> None:
+    def __init__(self, base_prompt: str, model: str = 'gemini-1.5-flash-8b') -> None:
         self._persona = base_prompt
         self._model = None
 

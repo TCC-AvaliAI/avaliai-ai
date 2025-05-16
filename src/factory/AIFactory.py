@@ -33,7 +33,7 @@ class AIFactory:
         Answers should be precise and direct.
     """
     
-    def get_ai(self, ai_type: str, model: str = "gemini-1.5-pro-latest") -> AIInterface:
+    def get_ai(self, ai_type: str, model: str = "gemini-1.5-flash-8b") -> AIInterface:
         if ai_type == 'gemini':
             return GeminiAIAdapter(self._base_prompt, model)
         else:
