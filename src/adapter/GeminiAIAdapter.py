@@ -1,6 +1,7 @@
 import os
 import google.generativeai as genai
 from src.interfaces.AIInterface import AIInterface
+from src.factory.AIFactory import AIFactory
 from dotenv import load_dotenv
 
 load_dotenv()

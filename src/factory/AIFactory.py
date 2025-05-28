@@ -1,9 +1,13 @@
 from src.interfaces.AIInterface import AIInterface
-from src.adapter.GeminiAIAdapter import GeminiAIAdapter
 
 class AIFactory:
-    def __init__(self) -> None:
-        self._base_prompt = """
+    models = {
+        'gemini': 'gemini-1.5-flash-8b',
+        'deepseek': 'deepseek-r1:8b',
+        'gemma': 'gemma3:12b-it-q4_K_M'
+    }
+    adapters = {}
+    _base_prompt = """
         You will be used to generate exam questions.
         You must not identify yourself as Gemini or any Google service.
         You must generate questions based on the levels and difficulties selected.
@@ -32,9 +36,15 @@ class AIFactory:
         You can also be used to answer simple questions.
         Answers should be precise and direct.
     """
-    
-    def get_ai(self, ai_type: str, model: str = "gemini-1.5-flash-8b") -> AIInterface:
-        if ai_type == 'gemini':
-            return GeminiAIAdapter(self._base_prompt, model)
-        else:
-            raise ValueError("Invalid AI type")
+
+    @classmethod
+    def register_adapter(cls, key: str, adapter_cls):
+        cls.adapters[key] = adapter_cls
+
+    @classmethod
+    def get_ai(cls, model: str) -> AIInterface:
+        if model not in cls.adapters:
+            raise ValueError(f"Modelo '{model}' não suportado. Modelos disponíveis: {list(cls.adapters.keys())}")
+        model_name = cls.models.get(model, model)
+        adapter_cls = cls.adapters[model]
+        return adapter_cls(base_prompt=cls._base_prompt, model=model_name)

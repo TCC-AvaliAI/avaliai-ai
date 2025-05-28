@@ -3,7 +3,7 @@ import re
 from src.factory.AIFactory import AIFactory
 
 class AIService:
-    def __init__(self, model='gemini'):
+    def __init__(self, model):
         self.ai = AIFactory().get_ai(model)
     
     def proccess_and_parse_response(self, response):
