@@ -14,14 +14,15 @@ class AIService:
             except json.JSONDecodeError:
                 raise ValueError("Erro ao decodificar JSON da resposta.")
         raise ValueError("Nenhum JSON válido encontrado na resposta.")
-    
-    def proccess_and_parse_response_question(self, response):
-        return response
 
     def generate_response(self, prompt):
         response = self.ai.generate_response(prompt)
+        return response
+    
+    def generate_response_exam(self, prompt):
+        response = self.ai.generate_response_exam(prompt)
         return self.proccess_and_parse_response(response)
     
     def generate_response_question(self, question):
         response = self.ai.generate_response_question(question)
-        return self.proccess_and_parse_response_question(response)
+        return self.proccess_and_parse_response(response)

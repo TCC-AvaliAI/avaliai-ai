@@ -4,14 +4,27 @@ from src.services.AIService import AIService
 app = Flask(__name__)
 ai_service = AIService()
 
-@app.route('/api/ai/response/', methods=['POST'])
-def generate_response():
+
+@app.route('/api/ai/response', methods=['POST'])
+def generate_response_base():
     data = request.get_json()
     if not data or 'prompt' not in data:
         return jsonify({"error": "O campo 'prompt' é obrigatório."}), 400
     prompt = data['prompt']
     try:
         response = ai_service.generate_response(prompt)
+        return jsonify({"answer": response}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/ai/response/exam', methods=['POST'])
+def generate_response():
+    data = request.get_json()
+    if not data or 'prompt' not in data:
+        return jsonify({"error": "O campo 'prompt' é obrigatório."}), 400
+    prompt = data['prompt']
+    try:
+        response = ai_service.generate_response_exam(prompt)
         return jsonify({"response": response}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -19,11 +32,12 @@ def generate_response():
 @app.route('/api/ai/response/question', methods=['POST'])
 def generate_response_question():
     data = request.get_json()
-    if not data or 'question' not in data:
-        return jsonify({"error": "O campo 'question' é obrigatório."}), 400
-    question = data['question']
+    if not data or 'prompt' not in data:
+        return jsonify({"error": "O campo 'prompt' é obrigatório."}), 400
+    prompt = data['prompt']
     try:
-        response = ai_service.generate_response_question(question)
-        return jsonify({"answer": response}), 200
+        response = ai_service.generate_response_question(prompt)
+        return jsonify({"response": response}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
