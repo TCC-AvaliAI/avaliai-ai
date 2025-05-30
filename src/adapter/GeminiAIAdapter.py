@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 class GeminiAIAdapter(AIInterface):
-    def __init__(self, prompts: dict, model: str = 'gemini-1.5-flash-8b') -> None:
+    def __init__(self, prompts: dict, model: str) -> None:
         self._prompts = prompts
         self._model = None
 
@@ -18,7 +18,7 @@ class GeminiAIAdapter(AIInterface):
 
     def generate_response(self, prompt: str) -> str:
         try:  
-            res = self._model.generate_content(f"{self._prompts["response"]}\n{prompt}").text
+            res = self._model.generate_content(f"{self._prompts["default"]}\n{prompt}").text
             return res 
         except Exception as e:
             print(e)

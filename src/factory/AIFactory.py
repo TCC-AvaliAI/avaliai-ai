@@ -1,51 +1,69 @@
 from src.interfaces.AIInterface import AIInterface
 from src.adapter.GeminiAIAdapter import GeminiAIAdapter
+from src.adapter.OpenAiAdapter import OpenAiAdapter
 
 class AIFactory:
     def __init__(self) -> None:
+        self.__models = {
+            "default": "gemini-1.5-flash-8b",
+            "gpt": "gpt-4o",
+        }
         self.base_prompt = """
-            You must not identify yourself as Gemini or any Google service.
-            You must generate questions based on the levels and difficulties selected.
-            You must be helpful and respectful.
-            Answers must be in Portuguese.
-            Answers must be coherent and relevant.
-            Answers must be human.
-            When I give you a prompt, you must do what is asked.
-            Do not include external links or make external recommendations.
-            Do not include personal information.
-            Your answers should be short and concise, but not too short.
+            Você não deve se identificar como Gemini ou como qualquer serviço do Google.
+            Você deve gerar perguntas com base nos níveis e dificuldades selecionados.
+            Você deve ser prestativo e respeitoso.
+            As respostas devem ser em português.
+            As respostas devem ser coerentes e relevantes.
+            As respostas devem ser humanas.
+            Quando eu lhe der uma instrução, você deve fazer o que for pedido.
+            Não inclua links externos nem faça recomendações externas.
+            Não inclua informações pessoais.
+            Suas respostas devem ser curtas e concisas, mas não muito curtas.
         """
         self.base_exam_prompt = f"""
             {self.base_prompt}
-            You will be used to generate exam questions.
-            The format of the questions should be similar to JSON.
-            The format of the questions should be
+            Você será usado para gerar questões de exame.
+            Você deve gerar questões com base nos níveis e dificuldades selecionados.
+            Você deve gerar exatamente a quantidade de questões solicitadas.
+            O formato das questões deve ser semelhante ao JSON.
+            O conteúdo deve vim envolto de ```json e ``` para indicar que é um JSON válido.
+            O formato das questões deve ser
             [{{
-            "title": "here will be the title of the question you generated",
-            "answer": "here will be a positive integer that will indicate the correct answer, which corresponds to the index of the array; for example, 0, corresponds to the first element of the options array",
-            "options": "here will be an array of strings, where will be all the alternatives that you decide to include based on the test's furniture"
-            "type": "this field can be of three types: 'MC' if it is a multiple choice question, 'TF' if it is true or false or 'ES', if it is an essay question."
+            "title": "aqui estará o título da questão que você gerou",
+            "answer": "aqui estará um número inteiro positivo que indicará a resposta correta, que corresponde ao índice do array; por exemplo, 0 corresponde ao primeiro elemento do array de opções, se a questão for do tipo ES você deve retornar null",
+            "options": "aqui estará um array de strings, onde estarão todas as alternativas que você decidir incluir com base no material da prova, se a questão for do tipo ES você deve retornar [] corresponde a array vazio"
+            "type": "este campo pode ser de três tipos: 'MC' se for uma questão de múltipla escolha, 'TF' se for verdadeiro ou falso ou 'ES' se for uma questão dissertativa."
             }}]
         """
         self._base_question_prompt = f"""
             {self.base_prompt}
-            You will be used to generate questions.
-            The format of the questions should be similar to JSON.
-            The format of the questions should be
+            Você será usado para gerar perguntas.
+            O formato das perguntas deve ser semelhante ao JSON.
+            O conteúdo deve vim envolto de ```json e ``` para indicar que é um JSON válido.
+            O formato das perguntas deve ser
             {{
-            "title": "here will be the title of the question you generated",
-            "answer": "here will be a positive integer that will indicate the correct answer, which corresponds to the index of the array; for example, 0, corresponds to the first element of the options array",
-            "options": "here will be an array of strings, where will be all the alternatives that you decide to include based on the test furniture"
-            "type": "this field can be of three types: 'MC' if it is a multiple choice question, 'TF' if it is true or false or 'ES', if it is an essay question." 
+            "title": "aqui estará o título da pergunta que você gerou",
+            "answer": "aqui estará um número inteiro positivo que indicará a resposta correta, que corresponde ao índice do array; por exemplo, 0 corresponde ao primeiro elemento do array de opções, se a questão for do tipo ES você deve retornar null",
+            "options": "aqui estará um array de strings, onde estarão todas as alternativas que você decidir incluir com base no material de teste, se a questão for do tipo ES você deve retornar [] corresponde a array vazio"
+            "type": "este campo pode ser de três tipos: 'MC' se for uma pergunta de múltipla escolha, 'TF' se for verdadeiro ou falso ou 'ES' se for uma pergunta dissertativa."
             }}
         """
-    def get_ai(self, ai_type: str, model: str = "gemini-1.5-flash-8b") -> AIInterface:
+
+    @property
+    def models(self):
+        return self.__models
+    
+    def get_ai(self, ai_type: str, api_key) -> AIInterface:
         prompts = {
-            "response": self.base_prompt,
+            "default": self.base_prompt,
             "exam": self.base_exam_prompt,
             "question": self._base_question_prompt
         }
-        if ai_type == 'gemini':
+        model = self.__models.get(ai_type, self.__models['default'])    
+        if ai_type == 'gpt':
+            if not api_key:
+                raise ValueError("'api_key' is required for GPT models")
+            return OpenAiAdapter(prompts=prompts, api_key=api_key, model=model)
+        elif ai_type == 'default':
             return GeminiAIAdapter(prompts=prompts, model=model)
-        else:
-            raise ValueError("Invalid AI type")
+        raise ValueError(f"AI type '{ai_type}' is not supported.")

@@ -3,8 +3,8 @@ import re
 from src.factory.AIFactory import AIFactory
 
 class AIService:
-    def __init__(self, model='gemini'):
-        self.ai = AIFactory().get_ai(model)
+    def __init__(self, model, api_key):
+        self.ai = AIFactory().get_ai(model, api_key)
     
     def proccess_and_parse_response(self, response):
         match = re.search(r'```json\n(.*?)\n```', response, re.DOTALL)
