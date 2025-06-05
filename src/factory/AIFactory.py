@@ -1,12 +1,14 @@
 from src.interfaces.AIInterface import AIInterface
 from src.adapter.GeminiAIAdapter import GeminiAIAdapter
 from src.adapter.OpenAiAdapter import OpenAiAdapter
+from src.adapter.GroqAiAdapter import GroqAiAdapter
 
 class AIFactory:
     def __init__(self) -> None:
         self.__models = {
             "default": "gemini-1.5-flash-8b",
             "gpt": "gpt-4o",
+            "groq": "meta-llama/llama-4-scout-17b-16e-instruct",
         }
         self.base_prompt = """
             Você não deve se identificar como Gemini ou como qualquer serviço do Google.
@@ -66,4 +68,6 @@ class AIFactory:
             return OpenAiAdapter(prompts=prompts, api_key=api_key, model=model)
         elif ai_type == 'default':
             return GeminiAIAdapter(prompts=prompts, model=model)
+        elif ai_type == 'groq':
+            return GroqAiAdapter(prompts=prompts, model=model)
         raise ValueError(f"AI type '{ai_type}' is not supported.")
