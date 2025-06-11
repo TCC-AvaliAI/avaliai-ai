@@ -16,7 +16,7 @@ class GeminiAIAdapter(AIInterface):
 
     def generate_response(self, prompt: str) -> str:
         try:  
-            res = self._gemini_model.generate_content(f"{self._prompts["default"]}\n{prompt}").text
+            res = self._gemini_model.generate_content(f"{self._prompts['default']}\n{prompt}").text
             return res 
         except Exception as e:
             print(e)
@@ -24,7 +24,7 @@ class GeminiAIAdapter(AIInterface):
         
     def generate_response_exam(self, prompt: str) -> str:
         try:  
-            res = self._gemini_model.generate_content(f"{self._prompts["exam"]}\n{prompt}").text
+            res = self._gemini_model.generate_content(f"{self._prompts['exam']}\n{prompt}").text
             return res 
         except Exception as e:
             print(e)
@@ -32,7 +32,7 @@ class GeminiAIAdapter(AIInterface):
         
     def generate_response_question(self, question):
         try:  
-            res = self._gemini_model.generate_content(f"{self._prompts["question"]}\n{question}").text
+            res = self._gemini_model.generate_content(f"{self._prompts['question']}\n{question}").text
             return res 
         except Exception as e:
             print(e)
