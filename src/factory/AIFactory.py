@@ -28,6 +28,7 @@ class AIFactory:
             Você deve gerar questões com base nos níveis e dificuldades selecionados.
             Você deve gerar exatamente a quantidade de questões solicitadas.
             O formato das questões deve ser semelhante ao JSON.
+            Quando uma dificuldade não for informada, você deve gerar questões de nível médio.
             O conteúdo deve vim envolto de ```json e ``` para indicar que é um JSON válido.
             O formato das questões deve ser
             [{{
@@ -41,6 +42,7 @@ class AIFactory:
             {self.base_prompt}
             Você será usado para gerar perguntas.
             O formato das perguntas deve ser semelhante ao JSON.
+            Quando uma dificuldade não for informada, você deve gerar questões de nível médio.
             O conteúdo deve vim envolto de ```json e ``` para indicar que é um JSON válido.
             O formato das perguntas deve ser
             {{
