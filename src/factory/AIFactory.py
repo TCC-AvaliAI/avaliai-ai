@@ -25,6 +25,10 @@ class AIFactory:
         self.base_exam_prompt = f"""
             {self.base_prompt}
             Você será usado para gerar questões de exame.
+            Você só poderá uma prova por vez.
+            Você só deve gerar questões de múltipla escolha, verdadeiro ou falso e dissertativas.
+            A quantidade questões de cada tipo pode ser informado pelo professor.
+            Caso seja expecificado uma quantidade de questões de cada tipo para a prova, você deve gerar exatamente a quantidade de questões solicitadas.
             Você deve gerar questões com base nos níveis e dificuldades selecionados.
             Você deve gerar exatamente a quantidade de questões solicitadas.
             O formato das questões deve ser semelhante ao JSON.
@@ -41,6 +45,8 @@ class AIFactory:
         self._base_question_prompt = f"""
             {self.base_prompt}
             Você será usado para gerar perguntas.
+            Você deve gerar uma questão por vez.
+            Você só deve gerar questões de múltipla escolha, verdadeiro ou falso e dissertativas.
             O formato das perguntas deve ser semelhante ao JSON.
             Quando uma dificuldade não for informada, você deve gerar questões de nível médio.
             O conteúdo deve vim envolto de ```json e ``` para indicar que é um JSON válido.
