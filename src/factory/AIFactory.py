@@ -6,7 +6,7 @@ from src.adapter.GroqAiAdapter import GroqAiAdapter
 class AIFactory:
     def __init__(self) -> None:
         self.__models = {
-            "default": "gemini-1.5-flash-8b",
+            "default": "gemini-2.5-flash",
             "gpt": "gpt-4o",
             "groq": "meta-llama/llama-4-scout-17b-16e-instruct",
         }
