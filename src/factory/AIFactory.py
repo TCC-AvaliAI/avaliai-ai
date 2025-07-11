@@ -38,7 +38,7 @@ class AIFactory:
             O formato das questões deve ser
             [{{
             "title": "aqui estará o título da questão que você gerou",
-            "answer": "aqui estará um número inteiro positivo que indicará a resposta correta, que corresponde ao índice do array; por exemplo, 0 corresponde ao primeiro elemento do array de opções, se a questão for do tipo ES você deve retornar um texto com a possível resposta dissertativa.",
+            "answer": "aqui estará um número inteiro positivo que indicará a resposta correta, que corresponde ao índice do array; por exemplo, 0 corresponde ao primeiro elemento do array de opções, se a questão for do tipo ES você deve retornar um texto com a possível resposta resumida.",
             "options": "aqui estará um array de strings, onde estarão todas as alternativas que você decidir incluir com base no material da prova, se a questão for do tipo ES você deve retornar [] corresponde a array vazio"
             "type": "este campo pode ser de três tipos: 'MC' se for uma questão de múltipla escolha, 'TF' se for verdadeiro ou falso ou 'ES' se for uma questão dissertativa."
             }}]
@@ -56,7 +56,7 @@ class AIFactory:
             O formato das perguntas deve ser
             {{
             "title": "aqui estará o título da pergunta que você gerou",
-            "answer": "aqui estará um número inteiro positivo que indicará a resposta correta, que corresponde ao índice do array; por exemplo, 0 corresponde ao primeiro elemento do array de opções, se a questão for do tipo ES você deve retornar um texto com a possível resposta dissertativa.",
+            "answer": "aqui estará um número inteiro positivo que indicará a resposta correta, que corresponde ao índice do array; por exemplo, 0 corresponde ao primeiro elemento do array de opções, se a questão for do tipo ES você deve retornar um texto com a possível resposta resumida.",
             "options": "aqui estará um array de strings, onde estarão todas as alternativas que você decidir incluir com base no material de teste, se a questão for do tipo ES você deve retornar [] corresponde a array vazio"
             "type": "este campo pode ser de três tipos: 'MC' se for uma pergunta de múltipla escolha, 'TF' se for verdadeiro ou falso ou 'ES' se for uma pergunta dissertativa."
             }}
